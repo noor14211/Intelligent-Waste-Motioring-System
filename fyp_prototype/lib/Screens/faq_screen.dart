@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp_prototype/Screens/register_complaint.dart';
 import 'package:lottie/lottie.dart';
+import 'package:footer/footer.dart';
+import 'package:footer/footer_view.dart';
 import 'package:expandable/expandable.dart';
 
 import '../main.dart';
@@ -13,7 +15,7 @@ class FaqScreen extends StatefulWidget {
 }
 
 class _FaqScreenState extends State<FaqScreen> {
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // Initial Selected Value
   String dropdownvalue = 'Item 1';
 
@@ -31,23 +33,101 @@ class _FaqScreenState extends State<FaqScreen> {
       'title': 'How to Register complain',
       'description':'First login or sign up through our app then click on register complain our application will prompt you that it will access your camera click ok then take a picture then click ok to register complain '
     },
+    {
+      'title': 'How to Register complain',
+      'description':'First login or sign up through our app then click on register complain our application will prompt you that it will access your camera click ok then take a picture then click ok to register complain '
+    },
 
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0XFF2C3539),
       appBar: AppBar(
-        title: const Text(" "),
+        backgroundColor: Colors.black,
+        actions: [
+          IconButton(
+              onPressed: () {
+                {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            overflow: Overflow.visible,
+                            children: <Widget>[
+                              Positioned(
+                                right: -40.0,
+                                top: -40.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: CircleAvatar(
+                                    child: Icon(Icons.close),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(1.0),
+                                      child: Text("Name"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(6.0),
+                                      child: TextFormField(),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(1.0),
+                                      child: Text("Question"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(6.0),
+                                      child: TextFormField(),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Ask"),
+                                        onPressed: () {
+                                          // if (_formKey.currentState.validate()) {
+                                          //   _formKey.currentState.save();
+                                          // }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                }
+              },
+              icon: Icon(Icons.question_mark))
+        ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+
+        child: ListView(
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: [
             for ( var i in items )
               Card1(i['title'],items[0]['description'])
           ],
+
         ),
+
       ),
+
+
+
     );
   }
 }
